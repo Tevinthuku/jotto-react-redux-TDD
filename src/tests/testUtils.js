@@ -1,5 +1,17 @@
 import checkPropTypes from "check-prop-types";
 
+import rootReducer from "../reducers";
+import { createStore } from "redux";
+
+/**
+ * @function storeFactory
+ * @param {object} initialState - Initial state for the store
+ * @returns {Store} - Redux Store.
+ */
+export const storeFactory = initialState => {
+  return createStore(rootReducer, initialState);
+};
+
 /**
  * This function returns a shallow dom node
  * @param {ShallowWrapper} wrapper - Enzyme shallow wrapper
