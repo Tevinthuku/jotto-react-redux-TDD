@@ -1,9 +1,13 @@
-import React from "react";
-import { shallow } from "enzyme";
+import rewire from "rewire"
+import React from "react"
+import { shallow } from "enzyme"
 
-import { findByTestAttr, storeFactory } from "./tests/testUtils";
+import { findByTestAttr, storeFactory } from "./tests/testUtils"
 
-import Input, { UnconnectedInput } from "./input";
+import Input from "./input"
+import { UnconnectedInput } from "./input"
+const input = rewire("./input")
+const mapStateToProps = input.__get__("mapStateToProps")
 /**
  * @function setup - func
  * @param {object} initialState - Initial state of component
@@ -14,7 +18,7 @@ const setup = (initialState = {}) => {
   return shallow(<Input {...{ store }} />)
     .dive()
     .dive();
-};
+}
 
 describe("render", () => {
   describe("word has not been guessed", () => {
@@ -116,3 +120,30 @@ describe("`guessWord` action creator call", () => {
     expect(wrapper.instance().inputBox.current.value).toBe("");
   });
 });
+
+// @ponicode
+describe("mapStateToProps", () => {
+    test("0", () => {
+        let callFunction = () => {
+            mapStateToProps({ success: true })
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("1", () => {
+        let callFunction = () => {
+            mapStateToProps({ success: false })
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("2", () => {
+        let callFunction = () => {
+            mapStateToProps({ success: undefined })
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+})
